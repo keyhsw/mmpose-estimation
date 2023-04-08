@@ -46,8 +46,8 @@ def predict(img):
     
     #vis_result = cv2.resize(vis_result, dsize=None, fx=0.5, fy=0.5)
     print(f"POSE_RESULTS: {pose_results}")
-    pose_image = Image.fromarray(pose_results)
-    print(f"POSE_IMAGE: {pose_image}")
+    #pose_image = Image.fromarray(pose_results)
+    print(f"Returned outputs: {returned_outputs}")
     #pose_image.save("pose_frame_" + ".jpeg")
     return vis_result
 
