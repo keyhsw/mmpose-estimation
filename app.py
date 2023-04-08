@@ -60,6 +60,7 @@ def predict(img):
         
         # draw lines between keypoints to form a skeleton
         skeleton = [(0,1), (1,2), (2,3), (3,4), (1,5), (5,6), (6,7), (1,8), (8,9), (9,10), (10,11), (8,12), (12,13), (13,14), (0,15), (15,17), (0,16), (16,18)]
+        
         for i, j in skeleton:
             if keypoints[i][2] < 0.1 or keypoints[j][2] < 0.1:
                 continue
