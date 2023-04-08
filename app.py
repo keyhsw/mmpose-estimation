@@ -13,6 +13,7 @@ import cv2
 from mmpose.apis import (inference_top_down_pose_model, init_pose_model,
                          vis_pose_result, process_mmdet_results)
 from mmdet.apis import inference_detector, init_detector
+from PIL import Image
 
 pose_config = 'configs/topdown_heatmap_hrnet_w48_coco_256x192.py'
 pose_checkpoint = 'hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
@@ -45,6 +46,9 @@ def predict(img):
     
     #vis_result = cv2.resize(vis_result, dsize=None, fx=0.5, fy=0.5)
     print(f"POSE_RESULTS: {pose_results}")
+    pose_image = Image.fromarray(pose_results)
+    print(f"POSE_IMAGE: {pose_image}")
+    #pose_image.save("pose_frame_" + ".jpeg")
     return vis_result
 
 example_list = ['examples/demo2.png']
