@@ -1,5 +1,5 @@
 ---
-title: Test Mmpose
+title: MMPose estimation
 emoji: 🏃
 colorFrom: pink
 colorTo: indigo
