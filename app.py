@@ -9,11 +9,12 @@ except:
     
 import mmpose
 import gradio as gr
-import cv2
 from mmpose.apis import (inference_top_down_pose_model, init_pose_model,
                          vis_pose_result, process_mmdet_results)
 from mmdet.apis import inference_detector, init_detector
 from PIL import Image
+import cv2
+import numpy as np
 
 pose_config = 'configs/topdown_heatmap_hrnet_w48_coco_256x192.py'
 pose_checkpoint = 'hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
@@ -43,13 +44,38 @@ def predict(img):
       pose_results,
       dataset=pose_model.cfg.data.test.type,
       show=False)
-    
+
+    original_image = Image.open(img)
+    width, height = original_image.size
     #vis_result = cv2.resize(vis_result, dsize=None, fx=0.5, fy=0.5)
     print(f"POSE_RESULTS: {pose_results}")
-    #pose_image = Image.fromarray(pose_results)
-    print(f"Returned outputs: {returned_outputs}")
-    #pose_image.save("pose_frame_" + ".jpeg")
-    return vis_result
+    
+    # create a black image of the same size as the original image
+    black_img = np.zeros((height, width, 3), np.uint8)
+    
+    # iterate through each person in the POSE_RESULTS data
+    for person in pose_results:
+        # get the keypoints for this person
+        keypoints = person['keypoints']
+        
+        # draw lines between keypoints to form a skeleton
+        skeleton = [(0,1), (1,2), (2,3), (3,4), (1,5), (5,6), (6,7), (1,8), (8,9), (9,10), (10,11), (8,12), (12,13), (13,14), (0,15), (15,17), (0,16), (16,18)]
+        for i, j in skeleton:
+            pt1 = (int(keypoints[i][0]), int(keypoints[i][1]))
+            pt2 = (int(keypoints[j][0]), int(keypoints[j][1]))
+            cv2.line(black_img, pt1, pt2, (255, 255, 255), thickness=2, lineType=cv2.LINE_AA)
+    
+        # draw circles at each keypoint
+        for i in range(keypoints.shape[0]):
+            pt = (int(keypoints[i][0]), int(keypoints[i][1]))
+            cv2.circle(black_img, pt, 3, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
+    
+    # write black_img to a jpg file
+    cv2.imwrite("output.jpg", black_img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    
+    return vis_result, "output.jpg"
 
 example_list = ['examples/demo2.png']
 title = "Pose estimation"
@@ -59,7 +85,7 @@ article = ""
 # Create the Gradio demo
 demo = gr.Interface(fn=predict,
                     inputs=gr.Image(), 
-                    outputs=[gr.Image(label='Prediction')], 
+                    outputs=[gr.Image(label='Prediction'), gr.Image(label='Poses')], 
                     examples=example_list, 
                     title=title,
                     description=description,
