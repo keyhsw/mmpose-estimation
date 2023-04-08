@@ -51,7 +51,7 @@ def predict(img):
     print(f"POSE_RESULTS: {pose_results}")
     
     # define colors for each body part
-    colors = {
+    body_part_colors = {
         "nose": (255, 0, 0),
         "left_eye": (0, 255, 0),
         "right_eye": (0, 0, 255),
@@ -85,8 +85,8 @@ def predict(img):
                     ("right_shoulder", "right_hip"), ("left_hip", "right_hip"), ("left_hip", "left_knee"),
                     ("right_hip", "right_knee"), ("left_knee", "left_ankle"), ("right_knee", "right_ankle")]
         for start_part, end_part in skeleton:
-            start_idx = BODY_PARTS[start_part]
-            end_idx = BODY_PARTS[end_part]
+            start_idx = list(body_part_colors.keys()).index(start_part)
+            end_idx = list(body_part_colors.keys()).index(end_part)
             if keypoints[start_idx][2] > 0.1 and keypoints[end_idx][2] > 0.1:
                 pt1 = (int(keypoints[start_idx][0]), int(keypoints[start_idx][1]))
                 pt2 = (int(keypoints[end_idx][0]), int(keypoints[end_idx][1]))
