@@ -82,7 +82,7 @@ def predict(img):
         # draw lines between keypoints to form a skeleton
         skeleton = [("right_eye", "left_eye", (255, 165, 0)),("nose", "left_eye", (255, 165, 0)), ("left_eye", "left_ear", (255, 165, 0)), ("nose", "right_eye", (255, 165, 0)), ("right_eye", "right_ear", (255, 165, 0)),
                     ("left_shoulder", "left_ear", (255, 165, 0)),("right_shoulder", "right_ear", (255, 165, 0)), ("left_shoulder", "right_shoulder", (255, 165, 0)), ("left_shoulder", "left_elbow", (0, 128, 0)), ("right_shoulder", "right_elbow",(0, 0, 255)),
-                    ("left_elbow", "left_wrist",(0, 128, 0), ("right_elbow", "right_wrist",(0, 0, 255)), ("left_shoulder", "left_hip",(255, 165, 0)),
+                    ("left_elbow", "left_wrist",(0, 128, 0)), ("right_elbow", "right_wrist",(0, 0, 255)), ("left_shoulder", "left_hip",(255, 165, 0)),
                     ("right_shoulder", "right_hip", (255, 165, 0)), ("left_hip", "right_hip", (255, 165, 0)), ("left_hip", "left_knee",(0, 128, 0)),
                     ("right_hip", "right_knee",(0, 0, 255)), ("left_knee", "left_ankle",(0, 128, 0)), ("right_knee", "right_ankle",(0, 0, 255))]
         for start_part, end_part, color in skeleton:
