@@ -22,9 +22,9 @@ det_config = 'configs/faster_rcnn_r50_fpn_1x_coco.py'
 det_checkpoint = 'faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
 
 # initialize pose model
-pose_model = init_pose_model(pose_config, pose_checkpoint, device='gpu')
+pose_model = init_pose_model(pose_config, pose_checkpoint, device='cuda')
 # initialize detector
-det_model = init_detector(det_config, det_checkpoint, device='gpu')
+det_model = init_detector(det_config, det_checkpoint, device='cuda')
 
 def predict(img):
     mmdet_results = inference_detector(det_model, img)
