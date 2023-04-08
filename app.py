@@ -54,27 +54,31 @@ def predict(img):
     black_img = np.zeros((height, width, 3), np.uint8)
     
     # iterate through each person in the POSE_RESULTS data
-    for person in pose_results:
+    for person in POSE_RESULTS:
         # get the keypoints for this person
         keypoints = person['keypoints']
         
         # draw lines between keypoints to form a skeleton
         skeleton = [(0,1), (1,2), (2,3), (3,4), (1,5), (5,6), (6,7), (1,8), (8,9), (9,10), (10,11), (8,12), (12,13), (13,14), (0,15), (15,17), (0,16), (16,18)]
         for i, j in skeleton:
+            if keypoints[i][2] < 0.1 or keypoints[j][2] < 0.1:
+                continue
             pt1 = (int(keypoints[i][0]), int(keypoints[i][1]))
             pt2 = (int(keypoints[j][0]), int(keypoints[j][1]))
             cv2.line(black_img, pt1, pt2, (255, 255, 255), thickness=2, lineType=cv2.LINE_AA)
     
         # draw circles at each keypoint
         for i in range(keypoints.shape[0]):
-            if keypoints[i][2] > 0.0: # check if the keypoint is visible
-                pt = (int(keypoints[i][0]), int(keypoints[i][1]))
-                cv2.circle(black_img, pt, 3, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
+            if keypoints[i][2] < 0.1:
+                continue
+            pt = (int(keypoints[i][0]), int(keypoints[i][1]))
+            cv2.circle(black_img, pt, 3, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
 
     
     # write black_img to a jpg file
-    cv2.imwrite("output.jpg", black_img)
+    
     cv2.waitKey(0)
+    cv2.imwrite("output.jpg", black_img)
     cv2.destroyAllWindows()
     
     return vis_result, "output.jpg"
