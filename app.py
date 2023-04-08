@@ -67,8 +67,10 @@ def predict(img):
     
         # draw circles at each keypoint
         for i in range(keypoints.shape[0]):
-            pt = (int(keypoints[i][0]), int(keypoints[i][1]))
-            cv2.circle(black_img, pt, 3, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
+            if keypoints[i][2] > 0.0: # check if the keypoint is visible
+                pt = (int(keypoints[i][0]), int(keypoints[i][1]))
+                cv2.circle(black_img, pt, 3, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
+
     
     # write black_img to a jpg file
     cv2.imwrite("output.jpg", black_img)
