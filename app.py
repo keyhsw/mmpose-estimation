@@ -46,7 +46,7 @@ def predict(img):
       show=False)
 
     #original_image = Image.open(img)
-    width, height = img.size
+    width, height, channels = img.shape
     #vis_result = cv2.resize(vis_result, dsize=None, fx=0.5, fy=0.5)
     print(f"POSE_RESULTS: {pose_results}")
     
