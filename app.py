@@ -51,7 +51,7 @@ def predict(img):
     print(f"POSE_RESULTS: {pose_results}")
     
     # create a black image of the same size as the original image
-    black_img = np.zeros((height, width, 3), np.uint8)
+    black_img = np.zeros((width, height, 3), np.uint8)
     
     # iterate through each person in the POSE_RESULTS data
     for person in pose_results:
@@ -59,7 +59,8 @@ def predict(img):
         keypoints = person['keypoints']
         
         # draw lines between keypoints to form a skeleton
-        skeleton = [(0,1), (1,2), (2,3), (3,4), (1,5), (5,6), (6,7), (1,8), (8,9), (9,10), (10,11), (8,12), (12,13), (13,14), (0,15), (15,16)]
+        #skeleton = [(0,1), (1,2), (2,3), (3,4), (1,5), (5,6), (6,7), (1,8), (8,9), (9,10), (10,11), (8,12), (12,13), (13,14), (0,15), (15,16)]
+        skeleton = [(0,1), (1,2), (3,4), (4,5), (2,6), (5,7), (2,3), (3,8), (8,9), (9,10), (10,11), (8,12), (12,13), (13,14), (1,0), (6,2), (11,5)]
         for i, j in skeleton:
             if keypoints[i][2] < 0.1 or keypoints[j][2] < 0.1:
                 continue
