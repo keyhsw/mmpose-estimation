@@ -70,8 +70,8 @@ def predict(img):
         "left_ankle": 15,
         "right_ankle": 16
     }
-    orange=(255,128,0)
-    blue=(51,153,255)
+    orange=(51,153,255)
+    blue=(255,128,0)
     green=(0,255,0)
     
     # create a black image of the same size as the original image
