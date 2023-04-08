@@ -52,24 +52,25 @@ def predict(img):
     
     # define colors for each body part
     body_part_colors = {
-        "nose": (255, 0, 0),
-        "left_eye": (0, 255, 0),
-        "right_eye": (0, 0, 255),
-        "left_ear": (255, 255, 0),
-        "right_ear": (0, 255, 255),
-        "left_shoulder": (255, 0, 255),
-        "right_shoulder": (128, 0, 128),
-        "left_elbow": (0, 128, 128),
-        "right_elbow": (128, 128, 0),
-        "left_wrist": (128, 128, 128),
-        "right_wrist": (0, 0, 0),
-        "left_hip": (255, 128, 0),
-        "right_hip": (0, 128, 255),
-        "left_knee": (128, 0, 255),
-        "right_knee": (255, 0, 128),
-        "left_ankle": (0, 255, 128),
-        "right_ankle": (128, 255, 0)
+        "nose": (255, 165, 0),
+        "left_eye": (255, 165, 0),
+        "right_eye": (255, 165, 0),
+        "left_ear": (255, 165, 0),
+        "right_ear": (255, 165, 0),
+        "left_shoulder": (0, 128, 0),
+        "right_shoulder": (0, 0, 255),
+        "left_elbow": (0, 128, 0),
+        "right_elbow": (0, 0, 255),
+        "left_wrist": (0, 128, 0),
+        "right_wrist": (0, 0, 255),
+        "left_hip": (0, 128, 0),
+        "right_hip": (0, 0, 255),
+        "left_knee": (0, 128, 0),
+        "right_knee": (0, 0, 255),
+        "left_ankle": (0, 128, 0),
+        "right_ankle": (0, 0, 255)
     }
+    
     # create a black image of the same size as the original image
     black_img = np.zeros((width, height, 3), np.uint8)
     
@@ -79,18 +80,18 @@ def predict(img):
         keypoints = person['keypoints']
         
         # draw lines between keypoints to form a skeleton
-        skeleton = [("nose", "left_eye"), ("left_eye", "left_ear"), ("nose", "right_eye"), ("right_eye", "right_ear"),
-                    ("left_shoulder", "right_shoulder"), ("left_shoulder", "left_elbow"), ("right_shoulder", "right_elbow"),
-                    ("left_elbow", "left_wrist"), ("right_elbow", "right_wrist"), ("left_shoulder", "left_hip"),
-                    ("right_shoulder", "right_hip"), ("left_hip", "right_hip"), ("left_hip", "left_knee"),
-                    ("right_hip", "right_knee"), ("left_knee", "left_ankle"), ("right_knee", "right_ankle")]
-        for start_part, end_part in skeleton:
+        skeleton = [("right_eye", "left_eye", (255, 165, 0)),("nose", "left_eye", (255, 165, 0)), ("left_eye", "left_ear", (255, 165, 0)), ("nose", "right_eye", (255, 165, 0)), ("right_eye", "right_ear", (255, 165, 0)),
+                    ("left_shoulder", "left_ear", (255, 165, 0)),("right_shoulder", "right_ear", (255, 165, 0)), ("left_shoulder", "right_shoulder", (255, 165, 0)), ("left_shoulder", "left_elbow", (0, 128, 0)), ("right_shoulder", "right_elbow",(0, 0, 255)),
+                    ("left_elbow", "left_wrist",(0, 128, 0), ("right_elbow", "right_wrist",(0, 0, 255)), ("left_shoulder", "left_hip",(255, 165, 0)),
+                    ("right_shoulder", "right_hip", (255, 165, 0)), ("left_hip", "right_hip", (255, 165, 0)), ("left_hip", "left_knee",(0, 128, 0)),
+                    ("right_hip", "right_knee",(0, 0, 255)), ("left_knee", "left_ankle",(0, 128, 0)), ("right_knee", "right_ankle",(0, 0, 255))]
+        for start_part, end_part, color in skeleton:
             start_idx = list(body_part_colors.keys()).index(start_part)
             end_idx = list(body_part_colors.keys()).index(end_part)
             if keypoints[start_idx][2] > 0.1 and keypoints[end_idx][2] > 0.1:
                 pt1 = (int(keypoints[start_idx][0]), int(keypoints[start_idx][1]))
                 pt2 = (int(keypoints[end_idx][0]), int(keypoints[end_idx][1]))
-                cv2.line(black_img, pt1, pt2, body_part_colors[start_part], thickness=2, lineType=cv2.LINE_AA)
+                cv2.line(black_img, pt1, pt2, color, thickness=2, lineType=cv2.LINE_AA)
     
         # draw circles at each keypoint
         for i in range(keypoints.shape[0]):
