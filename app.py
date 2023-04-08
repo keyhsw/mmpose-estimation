@@ -90,7 +90,7 @@ def predict(img):
             if keypoints[start_idx][2] > 0.1 and keypoints[end_idx][2] > 0.1:
                 pt1 = (int(keypoints[start_idx][0]), int(keypoints[start_idx][1]))
                 pt2 = (int(keypoints[end_idx][0]), int(keypoints[end_idx][1]))
-                cv2.line(black_img, pt1, pt2, colors[start_part], thickness=2, lineType=cv2.LINE_AA)
+                cv2.line(black_img, pt1, pt2, body_part_colors[start_part], thickness=2, lineType=cv2.LINE_AA)
     
         # draw circles at each keypoint
         for i in range(keypoints.shape[0]):
