@@ -54,7 +54,7 @@ def predict(img):
     black_img = np.zeros((height, width, 3), np.uint8)
     
     # iterate through each person in the POSE_RESULTS data
-    for person in POSE_RESULTS:
+    for person in pose_results:
         # get the keypoints for this person
         keypoints = person['keypoints']
         
