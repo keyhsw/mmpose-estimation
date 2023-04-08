@@ -45,7 +45,7 @@ def predict(img):
     
     #vis_result = cv2.resize(vis_result, dsize=None, fx=0.5, fy=0.5)
 
-    return vis_result
+    return vis_result, pose_results
 
 example_list = ['examples/demo2.png']
 title = "Pose estimation"
@@ -55,7 +55,7 @@ article = ""
 # Create the Gradio demo
 demo = gr.Interface(fn=predict,
                     inputs=gr.Image(), 
-                    outputs=[gr.Image(label='Prediction')], 
+                    outputs=[gr.Image(label='Prediction'), gr.Image(label='Pose Results')], 
                     examples=example_list, 
                     title=title,
                     description=description,
