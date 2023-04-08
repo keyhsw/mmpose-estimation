@@ -51,24 +51,24 @@ def predict(img):
     print(f"POSE_RESULTS: {pose_results}")
     
     # define colors for each body part
-    body_part_colors = {
-        "nose": (255, 165, 0),
-        "left_eye": (255, 165, 0),
-        "right_eye": (255, 165, 0),
-        "left_ear": (255, 165, 0),
-        "right_ear": (255, 165, 0),
-        "left_shoulder": (0, 128, 0),
-        "right_shoulder": (0, 0, 255),
-        "left_elbow": (0, 128, 0),
-        "right_elbow": (0, 0, 255),
-        "left_wrist": (0, 128, 0),
-        "right_wrist": (0, 0, 255),
-        "left_hip": (0, 128, 0),
-        "right_hip": (0, 0, 255),
-        "left_knee": (0, 128, 0),
-        "right_knee": (0, 0, 255),
-        "left_ankle": (0, 128, 0),
-        "right_ankle": (0, 0, 255)
+    body_part = {
+        "nose": 0,
+        "left_eye": 1,
+        "right_eye": 2,
+        "left_ear": 3,
+        "right_ear": 4,
+        "left_shoulder": 5,
+        "right_shoulder": 6,
+        "left_elbow": 7,
+        "right_elbow": 8,
+        "left_wrist": 9,
+        "right_wrist": 10,
+        "left_hip": 11,
+        "right_hip": 12,
+        "left_knee": 13,
+        "right_knee": 14,
+        "left_ankle": 15,
+        "right_ankle": 16
     }
     
     # create a black image of the same size as the original image
@@ -80,23 +80,23 @@ def predict(img):
         keypoints = person['keypoints']
         
         # draw lines between keypoints to form a skeleton
-        skeleton = [("right_eye", "left_eye", (255, 165, 0)),("nose", "left_eye", (255, 165, 0)), ("left_eye", "left_ear", (255, 165, 0)), ("nose", "right_eye", (255, 165, 0)), ("right_eye", "right_ear", (255, 165, 0)),
-                    ("left_shoulder", "left_ear", (255, 165, 0)),("right_shoulder", "right_ear", (255, 165, 0)), ("left_shoulder", "right_shoulder", (255, 165, 0)), ("left_shoulder", "left_elbow", (0, 128, 0)), ("right_shoulder", "right_elbow",(0, 0, 255)),
-                    ("left_elbow", "left_wrist",(0, 128, 0)), ("right_elbow", "right_wrist",(0, 0, 255)), ("left_shoulder", "left_hip",(255, 165, 0)),
-                    ("right_shoulder", "right_hip", (255, 165, 0)), ("left_hip", "right_hip", (255, 165, 0)), ("left_hip", "left_knee",(0, 128, 0)),
-                    ("right_hip", "right_knee",(0, 0, 255)), ("left_knee", "left_ankle",(0, 128, 0)), ("right_knee", "right_ankle",(0, 0, 255))]
+        skeleton = [("right_eye", "left_eye", (255,128,0)),("nose", "left_eye", (255,128,0)), ("left_eye", "left_ear", (255,128,0)), ("nose", "right_eye", (255,128,0)), ("right_eye", "right_ear", (255,128,0)),
+                    ("left_shoulder", "left_ear", (255,128,0)),("right_shoulder", "right_ear", (255,128,0)), ("left_shoulder", "right_shoulder", (255,128,0)), ("left_shoulder", "left_elbow", (0, 255, 0)), ("right_shoulder", "right_elbow",(51,153,255)),
+                    ("left_elbow", "left_wrist",(0, 255, 0)), ("right_elbow", "right_wrist",(51,153,255)), ("left_shoulder", "left_hip",(255,128,0)),
+                    ("right_shoulder", "right_hip", (255,128,0)), ("left_hip", "right_hip", (255,128,0)), ("left_hip", "left_knee",(0, 255, 0)),
+                    ("right_hip", "right_knee",(51,153,255)), ("left_knee", "left_ankle",(0, 255, 0)), ("right_knee", "right_ankle",(51,153,255))]
         for start_part, end_part, color in skeleton:
-            start_idx = list(body_part_colors.keys()).index(start_part)
-            end_idx = list(body_part_colors.keys()).index(end_part)
+            start_idx = list(body_part.keys()).index(start_part)
+            end_idx = list(body_part.keys()).index(end_part)
             if keypoints[start_idx][2] > 0.1 and keypoints[end_idx][2] > 0.1:
                 pt1 = (int(keypoints[start_idx][0]), int(keypoints[start_idx][1]))
                 pt2 = (int(keypoints[end_idx][0]), int(keypoints[end_idx][1]))
                 cv2.line(black_img, pt1, pt2, color, thickness=2, lineType=cv2.LINE_AA)
     
         # draw circles at each keypoint
-        for i in range(keypoints.shape[0]):
-            pt = (int(keypoints[i][0]), int(keypoints[i][1]))
-            cv2.circle(black_img, pt, 3, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
+        #for i in range(keypoints.shape[0]):
+        #    pt = (int(keypoints[i][0]), int(keypoints[i][1]))
+        #    cv2.circle(black_img, pt, 3, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
 
 
     
