@@ -70,6 +70,9 @@ def predict(img):
         "left_ankle": 15,
         "right_ankle": 16
     }
+    orange=(255,128,0)
+    blue=(51,153,255)
+    green=(0,255,0)
     
     # create a black image of the same size as the original image
     black_img = np.zeros((width, height, 3), np.uint8)
@@ -80,11 +83,11 @@ def predict(img):
         keypoints = person['keypoints']
         
         # draw lines between keypoints to form a skeleton
-        skeleton = [("right_eye", "left_eye", (255,128,0)),("nose", "left_eye", (255,128,0)), ("left_eye", "left_ear", (255,128,0)), ("nose", "right_eye", (255,128,0)), ("right_eye", "right_ear", (255,128,0)),
-                    ("left_shoulder", "left_ear", (255,128,0)),("right_shoulder", "right_ear", (255,128,0)), ("left_shoulder", "right_shoulder", (255,128,0)), ("left_shoulder", "left_elbow", (0, 255, 0)), ("right_shoulder", "right_elbow",(51,153,255)),
-                    ("left_elbow", "left_wrist",(0, 255, 0)), ("right_elbow", "right_wrist",(51,153,255)), ("left_shoulder", "left_hip",(255,128,0)),
-                    ("right_shoulder", "right_hip", (255,128,0)), ("left_hip", "right_hip", (255,128,0)), ("left_hip", "left_knee",(0, 255, 0)),
-                    ("right_hip", "right_knee",(51,153,255)), ("left_knee", "left_ankle",(0, 255, 0)), ("right_knee", "right_ankle",(51,153,255))]
+        skeleton = [("right_eye", "left_eye", orange),("nose", "left_eye", orange), ("left_eye", "left_ear", orange), ("nose", "right_eye", orange), ("right_eye", "right_ear", orange),
+                    ("left_shoulder", "left_ear", orange),("right_shoulder", "right_ear", orange), ("left_shoulder", "right_shoulder", orange), ("left_shoulder", "left_elbow", green), ("right_shoulder", "right_elbow",blue),
+                    ("left_elbow", "left_wrist",green), ("right_elbow", "right_wrist",blue), ("left_shoulder", "left_hip",orange),
+                    ("right_shoulder", "right_hip", orange), ("left_hip", "right_hip", orange), ("left_hip", "left_knee",green),
+                    ("right_hip", "right_knee",blue), ("left_knee", "left_ankle",green), ("right_knee", "right_ankle",blue)]
         for start_part, end_part, color in skeleton:
             start_idx = list(body_part.keys()).index(start_part)
             end_idx = list(body_part.keys()).index(end_part)
