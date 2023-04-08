@@ -50,6 +50,26 @@ def predict(img):
     #vis_result = cv2.resize(vis_result, dsize=None, fx=0.5, fy=0.5)
     print(f"POSE_RESULTS: {pose_results}")
     
+    # define colors for each body part
+    colors = {
+        "nose": (255, 0, 0),
+        "left_eye": (0, 255, 0),
+        "right_eye": (0, 0, 255),
+        "left_ear": (255, 255, 0),
+        "right_ear": (0, 255, 255),
+        "left_shoulder": (255, 0, 255),
+        "right_shoulder": (128, 0, 128),
+        "left_elbow": (0, 128, 128),
+        "right_elbow": (128, 128, 0),
+        "left_wrist": (128, 128, 128),
+        "right_wrist": (0, 0, 0),
+        "left_hip": (255, 128, 0),
+        "right_hip": (0, 128, 255),
+        "left_knee": (128, 0, 255),
+        "right_knee": (255, 0, 128),
+        "left_ankle": (0, 255, 128),
+        "right_ankle": (128, 255, 0)
+    }
     # create a black image of the same size as the original image
     black_img = np.zeros((width, height, 3), np.uint8)
     
@@ -59,21 +79,24 @@ def predict(img):
         keypoints = person['keypoints']
         
         # draw lines between keypoints to form a skeleton
-        #skeleton = [(0,1), (1,2), (2,3), (3,4), (1,5), (5,6), (6,7), (1,8), (8,9), (9,10), (10,11), (8,12), (12,13), (13,14), (0,15), (15,16)]
-        skeleton = [(0,1), (1,2), (3,4), (4,5), (2,6), (5,7), (2,3), (3,8), (8,9), (9,10), (10,11), (8,12), (12,13), (13,14), (1,0), (6,2), (11,5)]
-        for i, j in skeleton:
-            if keypoints[i][2] < 0.1 or keypoints[j][2] < 0.1:
-                continue
-            pt1 = (int(keypoints[i][0]), int(keypoints[i][1]))
-            pt2 = (int(keypoints[j][0]), int(keypoints[j][1]))
-            cv2.line(black_img, pt1, pt2, (255, 255, 255), thickness=2, lineType=cv2.LINE_AA)
+        skeleton = [("nose", "left_eye"), ("left_eye", "left_ear"), ("nose", "right_eye"), ("right_eye", "right_ear"),
+                    ("left_shoulder", "right_shoulder"), ("left_shoulder", "left_elbow"), ("right_shoulder", "right_elbow"),
+                    ("left_elbow", "left_wrist"), ("right_elbow", "right_wrist"), ("left_shoulder", "left_hip"),
+                    ("right_shoulder", "right_hip"), ("left_hip", "right_hip"), ("left_hip", "left_knee"),
+                    ("right_hip", "right_knee"), ("left_knee", "left_ankle"), ("right_knee", "right_ankle")]
+        for start_part, end_part in skeleton:
+            start_idx = BODY_PARTS[start_part]
+            end_idx = BODY_PARTS[end_part]
+            if keypoints[start_idx][2] > 0.1 and keypoints[end_idx][2] > 0.1:
+                pt1 = (int(keypoints[start_idx][0]), int(keypoints[start_idx][1]))
+                pt2 = (int(keypoints[end_idx][0]), int(keypoints[end_idx][1]))
+                cv2.line(black_img, pt1, pt2, colors[start_part], thickness=2, lineType=cv2.LINE_AA)
     
         # draw circles at each keypoint
         for i in range(keypoints.shape[0]):
-            if keypoints[i][2] < 0.1:
-                continue
             pt = (int(keypoints[i][0]), int(keypoints[i][1]))
             cv2.circle(black_img, pt, 3, (255, 255, 255), thickness=-1, lineType=cv2.LINE_AA)
+
 
     
     # write black_img to a jpg file
