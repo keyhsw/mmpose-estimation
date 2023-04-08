@@ -112,7 +112,7 @@ def predict(img):
     return vis_result, "output.jpg"
 
 example_list = ['examples/demo2.png']
-title = "Pose estimation"
+title = "MMPose estimation"
 description = ""
 article = ""
 
