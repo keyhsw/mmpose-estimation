@@ -16,6 +16,13 @@ from PIL import Image
 import cv2
 import numpy as np
 
+from openxlab.model import download
+download(model_repo='houshaowei/mmpose-estimation', 
+model_name='faster_rcnn_r50_fpn_1x_coco_20200130-047c8118')
+
+download(model_repo='houshaowei/mmpose-estimation', 
+model_name='hrnet_w48_coco_256x192-b9e0b3ab_20200708')
+
 pose_config = 'configs/topdown_heatmap_hrnet_w48_coco_256x192.py'
 pose_checkpoint = 'hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
 det_config = 'configs/faster_rcnn_r50_fpn_1x_coco.py'
