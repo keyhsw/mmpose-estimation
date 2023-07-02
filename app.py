@@ -23,10 +23,10 @@ model_name='faster_rcnn_r50_fpn_1x_coco_20200130-047c8118',output='/home/xlab-ap
 download(model_repo='houshaowei/mmpose-estimation', 
 model_name='hrnet_w48_coco_256x192-b9e0b3ab_20200708',output='/home/xlab-app-center/')
 
-pose_config = 'configs/topdown_heatmap_hrnet_w48_coco_256x192.py'
-pose_checkpoint = 'hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
-det_config = 'configs/faster_rcnn_r50_fpn_1x_coco.py'
-det_checkpoint = 'faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
+pose_config = '/home/xlab-app-center/configs/topdown_heatmap_hrnet_w48_coco_256x192.py'
+pose_checkpoint = '/home/xlab-app-center/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
+det_config = '/home/xlab-app-center/configs/faster_rcnn_r50_fpn_1x_coco.py'
+det_checkpoint = '/home/xlab-app-center/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
 
 # initialize pose model
 pose_model = init_pose_model(pose_config, pose_checkpoint, device='cuda')
