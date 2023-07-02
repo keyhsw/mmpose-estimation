@@ -29,7 +29,7 @@ det_config = '/home/xlab-app-center/configs/faster_rcnn_r50_fpn_1x_coco.py'
 det_checkpoint = '/home/xlab-app-center/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
 
 # initialize pose model
-# pose_model = init_pose_model(pose_config, pose_checkpoint, device='cuda')
+pose_model = init_pose_model(pose_config, pose_checkpoint, device='cuda:0')
 # initialize detector
 det_model = init_detector(det_config, det_checkpoint, device='cuda')
 
