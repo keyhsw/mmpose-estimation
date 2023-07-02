@@ -5,7 +5,7 @@ try:
     from mmcv.ops import get_compiling_cuda_version, get_compiler_version
 except:
     import mim
-    mim.install('mmcv-full==2.0.0')
+    mim.install('mmcv-full==1.5.0')
     
 import mmpose
 import gradio as gr
@@ -18,10 +18,10 @@ import numpy as np
 
 from openxlab.model import download
 download(model_repo='houshaowei/mmpose-estimation', 
-model_name='faster_rcnn_r50_fpn_1x_coco_20200130-047c8118')
+model_name='faster_rcnn_r50_fpn_1x_coco_20200130-047c8118',output='/home/xlab-app-center/')
 
 download(model_repo='houshaowei/mmpose-estimation', 
-model_name='hrnet_w48_coco_256x192-b9e0b3ab_20200708')
+model_name='hrnet_w48_coco_256x192-b9e0b3ab_20200708',output='/home/xlab-app-center/')
 
 pose_config = 'configs/topdown_heatmap_hrnet_w48_coco_256x192.py'
 pose_checkpoint = 'hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth'
