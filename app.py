@@ -5,7 +5,7 @@ try:
     from mmcv.ops import get_compiling_cuda_version, get_compiler_version
 except:
     import mim
-    mim.install('mmcv-full==1.5.0')
+    mim.install('mmcv-full==2.0.0')
     
 import mmpose
 import gradio as gr
